@@ -1,0 +1,15 @@
+{
+  "name": "daily-code-challenges-javascript",
+  "version": "1.0.0",
+  "description": "",  
+  "scripts": {
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+  },
+  "keywords": [],
+  "author": "Daniel Martinez",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
