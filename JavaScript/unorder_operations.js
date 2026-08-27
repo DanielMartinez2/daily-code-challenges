@@ -27,9 +27,21 @@ function evaluate(numbers, operators) {
   if (!Array.isArray(operators)) {
     throw new TypeError("operators must be an array");
   }
+  //throw an error if the numbers array is empty
+  if (numbers.length === 0) {
+    throw new TypeError("numbers array must not be empty");
+  }
+  //throw an error if the operators array is empty
+  if (operators.length === 0) {
+    throw new TypeError("operators array must not be empty");
+  }
   //throw an error if the numbers array contain non-numeric values
   if (numbers.some(num => typeof num !== 'number')) {
     throw new TypeError("numbers array must contain only numeric values");
+  }
+  //throw an error if the numbers array contain non-integer values
+  if (numbers.some(num => !Number.isInteger(num))) {
+    throw new TypeError("numbers array must contain only integer values");
   }
   //throw an error if the operators array contain any value different from the allowed operations
   const allowedOperations = ['+', '-', '*', '/', '%'];

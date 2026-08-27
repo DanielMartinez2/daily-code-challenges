@@ -24,6 +24,30 @@ test("should throw if operators is not an array", () => {
   }).toThrow(TypeError);
 });
 
+test("should throw if there are non integer numbers in the numbers array", () => {
+  expect(() => {
+    evaluate([1, 2, 3.5], ["+"]);
+  }).toThrow(TypeError);  
+});
+
+test("should throw if there are non string operators in the operators array", () => {
+  expect(() => {
+    evaluate([1, 2, 3], ["+", 5]);
+  }).toThrow(TypeError); 
+});
+
+test('should throw if the numbers array is empty', () => { 
+  expect(() => {
+    evaluate([], ["+"]);
+  }).toThrow(TypeError);
+});
+
+test('should throw if the operators array is empty', () => { 
+  expect(() => {
+    evaluate([1, 2, 3], []);
+  }).toThrow(TypeError);
+}); 
+
 test("should return the only number when the array has one element", () => {
   expect(evaluate([5], ["+"])).toBe(5);
 });
@@ -34,6 +58,10 @@ test("should not mutate the numbers array", () => {
   evaluate(numbers, ["+", "-"]);
 
   expect(numbers).toEqual([5, 6, 7, 8, 9]);
+});
+
+test("should follow JavaScript behavior when dividing by zero", () => {
+  expect(evaluate([10, 0], ["/"])).toBe(Infinity);
 });
 
 test('1) should return 3', () => {

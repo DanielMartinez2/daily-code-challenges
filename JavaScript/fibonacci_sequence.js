@@ -10,7 +10,19 @@ Given an array containing the first two numbers of a Fibonacci sequence, and an 
 
 */
 function fibonacciSequence(startSequence, length) {
-  if (length < 0) return "Invalid length."
+  if (length < 0) throw new TypeError("length must be a non-negative integer");
+  if (!Array.isArray(startSequence) || startSequence.length !== 2) {
+    throw new TypeError("startSequence must be an array containing exactly two numbers");
+  }
+  if (startSequence.some((n) => typeof n !== "number" || !Number.isFinite(n) || Number.isNaN(n))) {
+    throw new TypeError("startSequence must contain only finite numbers");
+  }
+  if (startSequence.some((n) => !Number.isInteger(n))) {
+    throw new TypeError("startSequence must contain only integers");
+  }
+  if (typeof length !== "number" || !Number.isInteger(length) || Number.isNaN(length)) {
+    throw new TypeError("length must be a non-negative integer");
+  }
   if (length == 0) return []
   let tabulation = startSequence
   for(let i=2; i<length;i++){
@@ -19,3 +31,4 @@ function fibonacciSequence(startSequence, length) {
   }  
   return length >=2 ? tabulation : [tabulation[length-1]];
 }
+export default fibonacciSequence;
