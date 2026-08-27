@@ -2,6 +2,10 @@ from magic_square_solver import solve_magic_square
 import pytest
 
 
+# ---------------------------------------------------------
+# Testes funcionais do desafio
+# ---------------------------------------------------------
+
 def test_returns_5_for_valid_magic_square():
     grid = [
         [2, 7, 6],
@@ -51,6 +55,11 @@ def test_returns_impossible_when_complete_rows_have_different_sums():
 
     assert solve_magic_square(grid) == "impossible"
 
+
+# ---------------------------------------------------------
+# Teste de efeito colateral
+# ---------------------------------------------------------
+
 def test_does_not_mutate_original_grid():
     grid = [
         [2, 7, 6],
@@ -64,7 +73,12 @@ def test_does_not_mutate_original_grid():
 
     assert grid == original
 
-def test_throws_if_grid_is_not_3_by_3():
+
+# ---------------------------------------------------------
+# Validação da estrutura do grid
+# ---------------------------------------------------------
+
+def test_raises_value_error_if_grid_is_not_3_by_3():
     grid = [
         [1, 2],
         [3, 0]
@@ -73,14 +87,86 @@ def test_throws_if_grid_is_not_3_by_3():
     with pytest.raises(ValueError):
         solve_magic_square(grid)
 
-#test if grid has only integers or float
-def test_throws_if_grid_contains_non_numeric_values():
+
+# ---------------------------------------------------------
+# Validação dos elementos
+# ---------------------------------------------------------
+
+def test_raises_type_error_if_grid_contains_non_numeric_values():
     grid = [
         [1, 2, 3],
-        [4, 'a', 6],
+        [4, "a", 6],
         [7, 8, 0]
     ]
 
+    with pytest.raises(TypeError):
+        solve_magic_square(grid)
+
+
+def test_raises_type_error_if_grid_contains_boolean():
+    grid = [
+        [1, 2, 3],
+        [4, True, 6],
+        [7, 8, 0]
+    ]
+
+    with pytest.raises(TypeError):
+        solve_magic_square(grid)
+
+
+@pytest.mark.parametrize(
+    "invalid_number",
+    [
+        float("nan"),
+        float("inf"),
+        float("-inf"),
+    ]
+)
+def test_raises_type_error_if_grid_contains_non_finite_number(
+    invalid_number
+):
+    grid = [
+        [1, 2, 3],
+        [4, invalid_number, 6],
+        [7, 8, 0]
+    ]
+
+    with pytest.raises(TypeError):
+        solve_magic_square(grid)
+
+
+# ---------------------------------------------------------
+# Validação do número ausente
+# ---------------------------------------------------------
+
+def test_raises_value_error_when_there_is_no_missing_number():
+    grid = [
+        [2, 7, 6],
+        [9, 5, 1],
+        [4, 3, 8]
+    ]
+
     with pytest.raises(ValueError):
-        solve_magic_square(grid)    
-        
+        solve_magic_square(grid)
+
+
+def test_raises_value_error_when_there_are_multiple_missing_numbers():
+    grid = [
+        [2, 7, 6],
+        [9, 0, 1],
+        [4, 0, 8]
+    ]
+
+    with pytest.raises(ValueError):
+        solve_magic_square(grid)
+
+
+def test_raises_value_error_when_multiple_zeros_are_in_same_row():
+    grid = [
+        [2, 7, 6],
+        [9, 0, 0],
+        [4, 3, 8]
+    ]
+
+    with pytest.raises(ValueError):
+        solve_magic_square(grid)

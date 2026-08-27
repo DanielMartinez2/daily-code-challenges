@@ -10,17 +10,27 @@ def solve_magic_square(grid):
         raise ValueError("grid must be 3x3")
     #check if grid has only integers or float
     if any(not isinstance(num, (int, float)) for line in grid for num in line):
-        raise ValueError("grid must contain only integers or floats")
+        raise TypeError("grid must contain only integers or floats")
+    #check for NaN or Infinity
+    if any(isinstance(num, float) and (num != num or num == float('inf') or num == float('-inf')) for line in grid for num in line):
+        raise TypeError("grid must not contain NaN or Infinity")
+    #check for boolean values
+    if any(isinstance(num, bool) for line in grid for num in line):
+        raise TypeError("grid must not contain boolean values")
     #discover missing number
     line_sum = []
     miss_line = None
     index = None
+    zero_count = sum(line.count(0) for line in grid)
     for i,line in enumerate(grid):          
         if 0 in line:
             miss_line = i
+            
             index = line.index(0)
         else:
             line_sum.append(sum(line))
+    if zero_count != 1:
+        raise ValueError("grid must contain exactly one missing number (0)")
     if line_sum[0] != line_sum[1]:
         return "impossible"
     if miss_line is None or index is None:
@@ -42,8 +52,3 @@ def solve_magic_square(grid):
     if square_copy[0][2] + square_copy[1][1] + square_copy[2][0] != correct_sum:
         return 'impossible'
     return num
-print(solve_magic_square([[2, 7, 6], [9, 0, 1], [4, 3, 8]]))
-print(solve_magic_square([[0, 14, 12], [18, 10, 2], [8, 6, 16]]))
-print(solve_magic_square([[12, 17, 16], [19, 0, 10], [14, 13, 18]]))
-print(solve_magic_square([[15, 35, 31], [43, 27, 11], [23, 19, 0]]))
-print(solve_magic_square([[26, 41, 14], [47, 35, 0], [32, 29, 44]]))
