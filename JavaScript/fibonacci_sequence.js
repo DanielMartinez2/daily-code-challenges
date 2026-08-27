@@ -14,17 +14,14 @@ function fibonacciSequence(startSequence, length) {
   if (!Array.isArray(startSequence) || startSequence.length !== 2) {
     throw new TypeError("startSequence must be an array containing exactly two numbers");
   }
-  if (startSequence.some((n) => typeof n !== "number" || !Number.isFinite(n) || Number.isNaN(n))) {
-    throw new TypeError("startSequence must contain only finite numbers");
-  }
   if (startSequence.some((n) => !Number.isInteger(n))) {
-    throw new TypeError("startSequence must contain only integers");
-  }
-  if (typeof length !== "number" || !Number.isInteger(length) || Number.isNaN(length)) {
+    throw new TypeError("startSequence must contain only finite numbers");
+  }  
+  if (!Number.isInteger(length)) {
     throw new TypeError("length must be a non-negative integer");
   }
   if (length == 0) return []
-  let tabulation = startSequence
+  let tabulation = [...startSequence]
   for(let i=2; i<length;i++){
     let fibonacci = tabulation[i-2] + tabulation[i-1]
     tabulation.push(fibonacci)

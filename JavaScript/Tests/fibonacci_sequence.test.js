@@ -1,4 +1,4 @@
-import fibonacci from '../fibonacci_sequence';
+import fibonacci from "../fibonacci_sequence.js";
 
 test('fibonacciSequence returns the correct Fibonacci sequence for a given length', () => {
   expect(fibonacci([0, 1], 10)).toEqual([0, 1, 1, 2, 3, 5, 8, 13, 21, 34]);
@@ -54,4 +54,32 @@ test('fibonacciSequence throws an error if starting sequence contains more than 
 test('fibonacciSequence throws an error if starting sequence contains NaN or Infinity', () => {
   expect(() => {
     fibonacci([Infinity, NaN], 5);}).toThrow(TypeError);
+});
+
+test("should not mutate the starting sequence", () => {
+  const startSequence = [0, 1];
+
+  fibonacci(startSequence, 5);
+
+  expect(startSequence).toEqual([0, 1]);
+});
+
+test("should return only the first number when length is 1", () => {
+  expect(fibonacci([0, 1], 1)).toEqual([0]);
+});
+
+test("should return both starting numbers when length is 2", () => {
+  expect(fibonacci([0, 1], 2)).toEqual([0, 1]);
+});
+
+test("should throw if starting sequence contains NaN", () => {
+  expect(() => {
+    fibonacci([0, NaN], 5);
+  }).toThrow(TypeError);
+});
+
+test("should throw if starting sequence contains Infinity", () => {
+  expect(() => {
+    fibonacci([0, Infinity], 5);
+  }).toThrow(TypeError);
 });
