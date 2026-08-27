@@ -4,7 +4,9 @@ Given a string, remove all spaces from the string, insert two spaces between eve
 
     Non-alphabetical characters should remain unchanged (except for spaces) */
 
-function spaceJam(s) {  
-  return s.replaceAll(/ /g, "").toUpperCase().split("").join("  ")  ;
+function spaceJam(s) {
+  if(typeof s !== "string") throw new TypeError("Input must be a string");
+  return s.replace(/ /g, "").toUpperCase().split("").join("  ")  ;
 }
 
+export default spaceJam;
