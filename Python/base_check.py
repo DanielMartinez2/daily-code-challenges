@@ -35,4 +35,3 @@ def is_valid_number(n, base):
         if letter.upper() not in valid_base_dict[base]:            
             return False
     return True
-print(is_valid_number("76543210", 10))

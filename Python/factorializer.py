@@ -6,14 +6,14 @@ Given an integer from zero to 20, return the factorial of that number. The facto
 
 """
 def factorial(n):
-    if not isinstance(n,int):
-        raise TypeError("Must be a integer!")
+    if not isinstance(n,int) or isinstance(n,bool):
+        raise TypeError("Must be a integer!")    
     if n < 0 or n > 20:
         raise ValueError("Input must be an integer between 0 and 20.")
     tabulation = [1,1]
     for i in range(2,n+1):
-        factorial = i * tabulation[-1]
-        tabulation.append(factorial)
+        factorial_calc = i * tabulation[-1]
+        tabulation.append(factorial_calc)
     
     return tabulation[n]
 
