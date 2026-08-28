@@ -14,9 +14,14 @@ def validate_inputs(laptops, budget):
         raise TypeError("Laptops must be a list of integers.")
     if not isinstance(budget, int):
         raise TypeError("Budget must be an integer.")
-
+    if laptops is None or budget is None:
+        raise TypeError("Laptops and budget cannot be None.")
+    
 def get_laptop_cost(laptops, budget):
     validate_inputs(laptops, budget)
+    #se laptops vazio, return 0
+    if not laptops:
+        return 0
     no_duplicates = list(set(laptops))        
     sorted_laptops = sorted(no_duplicates)    
     if budget >= sorted_laptops[len(sorted_laptops)-2]:
@@ -27,11 +32,3 @@ def get_laptop_cost(laptops, budget):
         return 0
     if len(within_budget) >= 1:
         return max(within_budget)
-
-
-#test cases to implement later
-'''get_laptop_cost([1500, 2000, 1800, 1400], 1900) should return 1800
-Passed: 2. get_laptop_cost([1500, 2000, 2000, 1800, 1400], 1900) should return 1800
-Passed: 3. get_laptop_cost([2099, 1599, 1899, 1499], 2200) should return 1899
-Passed: 4. get_laptop_cost([2099, 1599, 1899, 1499], 1000) should return 0
-Passed: 5. get_laptop_cost([1200, 1500, 1600, 1800, 1400, 2000], 1450) should return 1400'''
