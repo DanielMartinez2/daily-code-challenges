@@ -9,19 +9,42 @@ Given a string that contains properly nested parentheses, return the decoded ver
 
 """
 def decode(s):
+    if not isinstance(s, str):
+        raise TypeError("Must be a string")
+
+    # Validate parentheses
+    balance = 0
+
+    for char in s:
+        if char == "(":
+            balance += 1
+
+        elif char == ")":
+            balance -= 1
+
+            if balance < 0:
+                raise ValueError("Parentheses must be correctly balanced")
+
+    if balance != 0:
+        raise ValueError("Parentheses must be correctly balanced")
+
+    # No parentheses
+    if "(" not in s:
+        return s
+
     x = s.rfind("(")
     y = s.find(")", x)
 
-    new_s = s[:x] + s[x + 1:y][::-1] + s[y + 1:]
+    new_s = (s[:x] + s[x + 1:y][::-1] + s[y + 1:])
 
-    while new_s.find("(") != -1:
+    while "(" in new_s:
         x = new_s.rfind("(")
         y = new_s.find(")", x)
 
-        new_s = new_s[:x] + new_s[x + 1:y][::-1] + new_s[y + 1:]
+        new_s = (new_s[:x] + new_s[x + 1:y][::-1] + new_s[y + 1:])
 
     return new_s
-print(decode("((is?)(a(t d)h)e(n y( uo)r)aC)"))
+
 
 """Versão recursiva
 def decode(s):
