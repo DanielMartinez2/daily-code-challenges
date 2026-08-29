@@ -13,10 +13,10 @@ def find_target(arr, target):
         raise TypeError("Target must be an integer!")
     if any(not isinstance(x, (int, float)) or isinstance(x,bool) for x in arr):
         raise TypeError("Must be a number")
-    
+    seen = {}
     for index, elem in enumerate(arr):
-        for j in range(index + 1, len(arr)):
-            if elem + arr[j] == target and elem != arr[j]:
-                return [index, j]
-
+        needed = target - elem
+        if needed in seen and needed != elem:
+            return [seen[needed], index]
+        seen[elem] = index
     return "Target not found"
