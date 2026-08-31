@@ -7,14 +7,17 @@ Given an integer, determine if that number is a prime number or a negative prime
     1 and 0 are not considered prime numbers.
 
 '''
-
 def is_unnatural_prime(n):
-    if not isinstance(n,int):
-        raise TypeError("Input must be a number")
-    
-    divisable = 0
-    for i in range(2,abs(n)+1):
-        if n%i == 0:
-            divisable+=1
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise TypeError("Input must be an integer")
 
-    return True if divisable == 1 else False
+    n = abs(n)
+
+    if n <= 1:
+        return False
+
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+
+    return True
