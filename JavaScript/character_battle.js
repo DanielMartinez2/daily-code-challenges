@@ -18,34 +18,38 @@ For each battle, the stronger character wins. The army with more victories, wins
     "It was a tie" if both armies won the same number of battles. 
  */
 function battle(myArmy, opposingArmy) {  
+  if(typeof myArmy !== "string" || typeof opposingArmy !== "string"){
+    throw new TypeError("Both inputs must be a string")
+  }
+
   if (myArmy.length > opposingArmy.length){
-    return "Opponent retreated"
+    return "Opponent retreated";
   }
   else if(myArmy.length < opposingArmy.length){
-    return "We retreated"
+    return "We retreated";
   }else{      
     const getStrength = (letter) =>{
-      let strength = letter.charCodeAt(0)
+      let strength = letter.charCodeAt(0);
       if(strength >= 48 && strength <=57){
-        return strength - 48
+        return strength - 48;
       }else if(strength >= 65 && strength <=90){      
-        return strength - 38
+        return strength - 38;
       }else if (strength >= 97 && strength <=122){
-        return strength - 96
+        return strength - 96;
       }else{
-        return 0
-      }
+        return 0;
+      };
     }    
-    let myArmyCounter = 0
-    let opponentArmyCounter = 0    
+    let myArmyCounter = 0;
+    let opponentArmyCounter = 0;
     for(let i=0; i<myArmy.length;i++){
       const myArmyStr = getStrength(myArmy[i])
       const myOpposingArmyStr = getStrength(opposingArmy[i])
       if (myArmyStr === myOpposingArmyStr) continue
       if (myOpposingArmyStr > myArmyStr) opponentArmyCounter++
       if (myOpposingArmyStr < myArmyStr) myArmyCounter++
-    }  
+    };  
     return myArmyCounter == opponentArmyCounter ? "It was a tie" : myArmyCounter > opponentArmyCounter ? "We won" : "We lost" ;
-  }  
-}
-console.log(battle("Mr. Smith", "Dr. Jones"))
+  };  
+};
+export default battle;
