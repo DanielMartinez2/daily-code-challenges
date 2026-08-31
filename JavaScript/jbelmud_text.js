@@ -10,6 +10,9 @@ Given a string, return a jumbled version of that string where each word is trans
 
 
 function jbelmu(text) {
+  if (typeof text !== 'string'){
+    throw new TypeError("Input must be a string.")
+  }
   const words = text.split(" ")
   const jumbledWords = words.map((word)=>{
     if (word.length <= 2) return word
@@ -20,6 +23,4 @@ function jbelmu(text) {
   })
   return jumbledWords.join(" ");
 }
-
-console.log(jbelmu("i love jumbled text"))
-
+export default jbelmu;
