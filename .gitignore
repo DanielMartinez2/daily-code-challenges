@@ -4,4 +4,4 @@ node_modules
 .pytest_cache
 __pycache__
 esqueleto_testes.py
-esqueleton.test.js
+JavaScript\Tests\esqueleton.test.js
