@@ -16,5 +16,6 @@ def find_missing_numbers(arr):
 
     if arr == []:
         raise ValueError("Input list cannot be empty")
+    numbers = set(arr)
 
-    return [x for x in range(1, max(arr)+1) if x not in set(arr)]    
+    return [x for x in range(1, max(arr)+1) if x not in numbers]    
