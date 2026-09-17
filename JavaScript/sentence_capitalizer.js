@@ -9,21 +9,26 @@ Given a paragraph, return a new paragraph where the first char of each sentence 
 
 */
 function capitalize(paragraph) {
-    if (typeof paragraph !== "string") {
-        throw new TypeError("Input must be a string");
-    }
-    let needsCapitalization = false;
-    
-    return paragraph.split("").map(char =>{
-        if(/[.?!]/.test(char)){
-            needsCapitalization= false;
-            return char;
-        }
-        if(!needsCapitalization && /[a-z]/i.test(char)){
-            needsCapitalization = true;
-            return char.toUpperCase();
-        }
-        return char;        
-    }).join("");;
-} 
+  if (typeof paragraph !== "string") {
+    throw new TypeError("Input must be a string");
+  }
+
+  let needsCapitalization = true;
+
+  return Array.from(paragraph)
+    .map(char => {
+      if (/[.?!]/.test(char)) {
+        needsCapitalization = true;
+        return char;
+      }
+
+      if (needsCapitalization && /\p{L}/u.test(char)) {
+        needsCapitalization = false;
+        return char.toUpperCase();
+      }
+
+      return char;
+    })
+    .join("");
+}
 export default capitalize;

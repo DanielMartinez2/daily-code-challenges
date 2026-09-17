@@ -210,3 +210,89 @@ describe("Sentence Capitalizer", () => {
   });
 
 });
+describe("accented letters and Unicode characters", () => {
+
+  test("capitalizes an accented lowercase letter at the beginning", () => {
+    expect(
+      capitalize("árvore bonita.")
+    ).toBe("Árvore bonita.");
+  });
+
+
+  test("capitalizes accented letters after sentence terminators", () => {
+    expect(
+      capitalize("olá mundo. é um bom dia! amanhã veremos?")
+    ).toBe("Olá mundo. É um bom dia! Amanhã veremos?");
+  });
+
+
+  test("handles different accented Latin letters", () => {
+    expect(
+      capitalize("é verão. útil mesmo! ñandú curioso?")
+    ).toBe("É verão. Útil mesmo! Ñandú curioso?");
+  });
+
+
+  test("preserves accents in letters that are not sentence initials", () => {
+    expect(
+      capitalize("ação rápida. coração feliz.")
+    ).toBe("Ação rápida. Coração feliz.");
+  });
+
+
+  test("preserves cedilla and accented characters inside words", () => {
+    expect(
+      capitalize("coração, açúcar e café. emoção!")
+    ).toBe("Coração, açúcar e café. Emoção!");
+  });
+
+
+  test("preserves emoji before the first letter", () => {
+    expect(
+      capitalize("😊 olá mundo. 🚀 amanhã viajamos!")
+    ).toBe("😊 Olá mundo. 🚀 Amanhã viajamos!");
+  });
+
+
+  test("capitalizes an accented letter after emoji", () => {
+    expect(
+      capitalize("😊 élève heureux. 🚀 über cool!")
+    ).toBe("😊 Élève heureux. 🚀 Über cool!");
+  });
+
+
+  test("preserves Unicode symbols and currency characters", () => {
+    expect(
+      capitalize("€100 é caro. ©2026 exemplo!")
+    ).toBe("€100 É caro. ©2026 Exemplo!");
+  });
+
+
+  test("preserves typographic quotation marks", () => {
+    expect(
+      capitalize("“hello world.” ‘how are you?’")
+    ).toBe("“Hello world.” ‘How are you?’");
+  });
+
+
+  test("preserves em dash and other Unicode punctuation", () => {
+    expect(
+      capitalize("—hello world. —goodbye!")
+    ).toBe("—Hello world. —Goodbye!");
+  });
+
+
+  test("preserves non-Latin Unicode text", () => {
+    expect(
+      capitalize("привет мир. как дела?")
+    ).toBe("Привет мир. Как дела?");
+  });
+
+
+  test("preserves emoji and Unicode characters exactly when no change is needed", () => {
+    expect(
+      capitalize("Hello 🌍! Café ☕.")
+    ).toBe("Hello 🌍! Café ☕.");
+  });
+
+});
