@@ -1,0 +1,58 @@
+/**
+ * Spam Detector
+
+Given a phone number in the format "+A (BBB) CCC-DDDD", where each letter represents a digit as follows:
+
+    A represents the country code and can be any number of digits.
+    BBB represents the area code and will always be three digits.
+    CCC and DDDD represent the local number and will always be three and four digits long, respectively.
+
+Determine if it's a spam number based on the following criteria:
+
+    The country code is greater than 2 digits long or doesn't begin with a zero (0).
+    The area code is greater than 900 or less than 200.
+    The sum of first three digits of the local number appears within last four digits of the local number.
+    The number has the same digit four or more times in a row (ignoring the formatting characters).
+
+Tests:
+
+    Passed: 1. isSpam("+0 (200) 234-0182") should return false.
+    Passed: 2. isSpam("+091 (555) 309-1922") should return true.
+    Passed: 3. isSpam("+1 (555) 435-4792") should return true.
+    Passed: 4. isSpam("+0 (955) 234-4364") should return true.
+    Passed: 5. isSpam("+0 (155) 131-6943") should return true.
+    Passed: 6. isSpam("+0 (555) 135-0192") should return true.
+    Passed: 7. isSpam("+0 (555) 564-1987") should return true.
+    Passed: 8. isSpam("+00 (555) 234-0182") should return false.
+ */
+function isSpam(number) {
+  if (typeof number !== "string") {
+    throw new TypeError("Input must be a string");
+  }  
+  const regex = /^\+(\d+) \((\d{3})\) (\d{3})-(\d{4})$/;
+  const match = number.match(regex);
+  if (!match){
+    throw new Error("Phone number must be in the format: +A (BBB) CCC-DDDD")
+  }
+  const countryCode = match[1];
+  const areaCode = match[2];
+  const localNumberOne = match[3];
+  const localNumberTwo = match[4];
+  
+  if (countryCode.length > 2 || countryCode[0] !== '0'){
+    return true;
+  }
+  if (parseInt(areaCode) > 900 || parseInt(areaCode) < 200 ){
+    return true;
+  }
+  const sumFirstThreeLocalDigits = parseInt(localNumberOne[0]) + parseInt(localNumberOne[1]) + parseInt(localNumberOne[2]);
+  if (localNumberTwo.includes(sumFirstThreeLocalDigits.toFixed(0))){
+    return true;
+  }
+  const onlyDigits = number.replace(/\D/g, '');
+  if (/(\d)\1{3,}/.test(onlyDigits)) {
+    return true;
+  }
+  return false;
+}
+export default isSpam;
